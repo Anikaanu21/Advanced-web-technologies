@@ -1,60 +1,28 @@
 import { Injectable } from '@nestjs/common';
 
-import { CreateCourseDto } from './dto/create-course.dto';
-import { UpdateCourseDto } from './dto/update-course.dto';
-
 @Injectable()
 export class CourseService {
-  getAllCourses() {
-    return {
-      message: 'All courses fetched successfully',
-      data: [],
-    };
+  getAllCourses(): string {
+    return 'Get All Courses - from Service';
   }
 
-  getCourseById(id: string) {
-    return {
-      message: 'Course fetched successfully',
-      id,
-    };
+  getCourseById(id: string): string {
+    return `Get Course with ID: ${id} - from Service`;
   }
 
-  createCourse(dto: CreateCourseDto) {
-    return {
-      message: 'Course created successfully',
-      data: dto,
-    };
+  createCourse(): string {
+    return 'Create Course - from Service';
   }
 
-  updateCourse(id: string, dto: UpdateCourseDto) {
-    return {
-      message: 'Course updated successfully',
-      id,
-      data: dto,
-    };
+  updateCourse(id: string): string {
+    return `Update Course ${id} - from Service`;
   }
 
-  patchCourse(id: string, dto: UpdateCourseDto) {
-    return {
-      message: 'Course patched successfully',
-      id,
-      updatedFields: Object.keys(dto),
-    };
+  patchCourse(id: string): string {
+    return `Patch Course ${id} - from Service`;
   }
 
-  deleteCourse(id: string) {
-    return {
-      message: 'Course deleted successfully',
-      id,
-    };
-  }
-
-  uploadCourseMaterial(id: string, file: any) {
-    return {
-      message: 'Material uploaded successfully',
-      courseId: id,
-      filename: file.filename,
-      path: file.path,
-    };
+  deleteCourse(id: string): string {
+    return `Delete Course ${id} - from Service`;
   }
 }

@@ -6,17 +6,8 @@ import {
   Patch,
   Delete,
   Param,
-  Body,
-  UploadedFile,
-  UseInterceptors,
-  BadRequestException,
 } from '@nestjs/common';
-
-import { FileInterceptor } from '@nestjs/platform-express';
 import { CourseService } from './course.service';
-
-import { CreateCourseDto } from './dto/create-course.dto';
-import { UpdateCourseDto } from './dto/update-course.dto';
 
 @Controller('course')
 export class CourseController {
@@ -33,45 +24,22 @@ export class CourseController {
   }
 
   @Post()
-  createCourse(@Body() dto: CreateCourseDto) {
-    return this.courseService.createCourse(dto);
+  createCourse() {
+    return this.courseService.createCourse();
   }
 
   @Put(':id')
-  updateCourse(@Param('id') id: string, @Body() dto: UpdateCourseDto) {
-    return this.courseService.updateCourse(id, dto);
+  updateCourse(@Param('id') id: string) {
+    return this.courseService.updateCourse(id);
   }
 
   @Patch(':id')
-  patchCourse(@Param('id') id: string, @Body() dto: UpdateCourseDto) {
-    return this.courseService.patchCourse(id, dto);
+  patchCourse(@Param('id') id: string) {
+    return this.courseService.patchCourse(id);
   }
 
   @Delete(':id')
   deleteCourse(@Param('id') id: string) {
     return this.courseService.deleteCourse(id);
-  }
-
-  @Post(':id/upload')
-  @UseInterceptors(
-    FileInterceptor('file', {
-      limits: { fileSize: 2 * 1024 * 1024 },
-      fileFilter: (req, file, cb) => {
-        const allowed = /\.(jpg|jpeg|png|pdf)$/i;
-        if (!allowed.test(file.originalname)) {
-          return cb(
-            new BadRequestException('Only jpg, jpeg, png, pdf allowed'),
-            false,
-          );
-        }
-        cb(null, true);
-      },
-    }),
-  )
-  uploadFile(
-    @Param('id') id: string,
-    @UploadedFile() file: any,
-  ) {
-    return this.courseService.uploadCourseMaterial(id, file);
   }
 }
